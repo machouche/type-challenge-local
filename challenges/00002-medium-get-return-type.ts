@@ -25,7 +25,11 @@
 
 /* _____________ Your Code Here _____________ */
 
-type MyReturnType<T> = any;
+type MyReturnType<T extends (...arg: any) => any> = T extends (
+  ...arg: any
+) => infer ReturnedType
+  ? ReturnedType
+  : never;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from "@type-challenges/utils";
@@ -48,7 +52,6 @@ type ComplexObject = {
 
 const fn = (v: boolean) => (v ? 1 : 2);
 const fn1 = (v: boolean, w: any) => (v ? 1 : 2);
-
 /* _____________ Further Steps _____________ */
 /*
   > Share your solutions: https://tsch.js.org/2/answer
